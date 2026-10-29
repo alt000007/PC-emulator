@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Platform-neutral logic for the PC companion: pairing, device registry,
+    the phone-facing HTTPS API and the Sunshine admin API client.
+    Kept free of WinForms/Windows APIs so it can be unit-tested on any OS.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>PocketPC.Core</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="PocketPC.Core.Tests" />
+  </ItemGroup>
+
+</Project>

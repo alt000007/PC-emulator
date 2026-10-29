@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/PocketPC.Companion/PocketPC.Companion.csproj" />
+    <Project Path="src/PocketPC.Core/PocketPC.Core.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/PocketPC.Core.Tests/PocketPC.Core.Tests.csproj" />
+  </Folder>
+  <Folder Name="/tools/">
+    <Project Path="tools/PocketPC.TestHost/PocketPC.TestHost.csproj" />
+  </Folder>
+</Solution>
