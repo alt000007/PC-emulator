@@ -89,3 +89,20 @@ Windows PC                                  Android phone (one app, GPL-3.0)
 
 Settings sync uses the PC companion as the hub, with no cloud. Each device has a certificate, and revoking one in the
 tray app deletes it from both Sunshine and the side channel at once.
+
+Correction: the phone app's new code is **Java** (not Kotlin/Compose), to match the Moonlight code it extends.
+
+## 6. Decisions after your answers
+
+**Your phone:** Xiaomi Redmi Note 14 4G (24117RN76E).
+- MediaTek Helio G99-Ultra, **Mali-G57 MC2** GPU
+- 8 GB RAM (+4 GB virtual), Android 16 (HyperOS), about 24 GB free storage
+- 2400×1080 AMOLED screen, Wi-Fi 5
+
+| | What it means |
+|---|---|
+| **Mode 1 (streaming)** | Fully supported. The G99 has hardware **H.264 and HEVC** decoding but **no AV1**, so the defaults are HEVC at 1080p, 60 fps, about 20 Mbps on 5 GHz Wi-Fi. The virtual display (a later step) can match the phone's 20:9 screen. |
+| **Mode 2 (local)** | **Very limited on this phone.** Mali GPUs can't use Turnip, so DXVK has to run on the vendor Mali Vulkan driver, or on VirGL, which is slower. Expect only light 2D games, old DirectX 9 titles and desktop programs at low resolution. Mode 2 stays in the plan, but streaming is what this phone is for. |
+| **Roblox (top priority)** | **Streaming is the way to play the PC version.** It runs on your real Windows PC, so Roblox's Hyperion anti-cheat is happy, and it gets full PC graphics. **Mode 2 can't run Roblox.** The Windows client refuses to run under Wine, and we won't try to get around that. To play Roblox *without* the PC, use the official Roblox Android app. PocketPC's launcher will link to it rather than emulate it. Controls: a WASD + mouse-look layout tuned for Roblox in the touch-controls step. We'll also test whether Roblox shows its own touch controls when Moonlight sends real touch input. |
+| **Remote access** | Tailscale (free plan, sign in with your existing account), per your "do what you think is best". |
+| **Other games** | None picked yet. Test targets are Roblox plus one light offline Windows game for Mode 2. |

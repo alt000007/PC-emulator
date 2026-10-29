@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- PocketPC strings. Kept apart from Moonlight's strings.xml so upstream updates merge cleanly. -->
+<resources>
+    <string name="pocketpc_pair_title">Pair with your PC</string>
+    <string name="pocketpc_pair_intro">On your PC, open PocketPC (tray icon) and click \"Pair new phone…\". Then scan the QR code it shows.</string>
+    <string name="pocketpc_scan_qr">Scan QR code</string>
+    <string name="pocketpc_scan_prompt">Point the camera at the QR code in PocketPC on your PC</string>
+    <string name="pocketpc_or_code">No camera? Type the PC address and code instead:</string>
+    <string name="pocketpc_host_hint">PC address, e.g. 192.168.1.20</string>
+    <string name="pocketpc_code_hint">Code, e.g. 7K3M-Q9XR-T2HB</string>
+    <string name="pocketpc_pair_button">Pair</string>
+    <string name="pocketpc_classic_add">Add a PC without PocketPC (classic Moonlight)</string>
+    <string name="pocketpc_confirm_title">Pair with %1$s?</string>
+    <string name="pocketpc_confirm_message">This lets this phone stream from %1$s and control it. Only continue if you opened the pairing window on that PC yourself.</string>
+    <string name="pocketpc_not_a_pairing_qr">That QR code isn\'t a PocketPC pairing code.</string>
+    <string name="pocketpc_enter_host_and_code">Enter the PC address and the code shown on the PC.</string>
+    <string name="pocketpc_paired_toast">Paired with %1$s. Pick a game or the desktop to start streaming.</string>
+
+    <string name="pocketpc_progress_connecting">Connecting to your PC…</string>
+    <string name="pocketpc_progress_pairing">Pairing securely…</string>
+    <string name="pocketpc_progress_streaming">Setting up streaming (this takes a few seconds)…</string>
+
+    <string name="pocketpc_error_unreachable">Couldn\'t reach the PC. Make sure the phone is on the same Wi-Fi (or Tailscale) and PocketPC is running on the PC.\n\n(%1$s)</string>
+    <string name="pocketpc_error_keystore">This phone couldn\'t create its security key (%1$s).</string>
+    <string name="pocketpc_error_wrong_code">That code isn\'t right. Check the code shown on the PC and try again.</string>
+    <string name="pocketpc_error_invalid_code">Codes have 12 letters and numbers, like 7K3M-Q9XR-T2HB.</string>
+    <string name="pocketpc_error_too_many_attempts">Too many wrong codes. Click \"New code\" on the PC and try again.</string>
+    <string name="pocketpc_error_pairing_closed">The PC isn\'t accepting new phones right now. In PocketPC on the PC, click \"Pair new phone…\" first.</string>
+    <string name="pocketpc_error_proof_mismatch">The PC at this address couldn\'t prove it is the one showing the code. Check the address, or scan the QR code instead.</string>
+    <string name="pocketpc_error_not_paired">This PC no longer trusts this phone. Pair it again.</string>
+    <string name="pocketpc_error_sunshine_mismatch">The streaming server didn\'t match the PC you paired with, so streaming was not set up. Try again on your home network.</string>
+    <string name="pocketpc_error_generic">Pairing failed (%1$s).</string>
+
+    <string name="pocketpc_partial_no_sunshine">Paired with %1$s, but Sunshine isn\'t installed there yet. Run the PocketPC installer on the PC, then pair again to stream.</string>
+    <string name="pocketpc_partial_sunshine_unreachable">Paired with %1$s, but Sunshine (the streaming service) didn\'t answer. Make sure it\'s running, then pair again.</string>
+    <string name="pocketpc_partial_sunshine_login">Paired with %1$s, but PocketPC on the PC still needs your Sunshine login. Open PocketPC on the PC, finish the Sunshine step, then pair again.</string>
+    <string name="pocketpc_partial_streaming_failed">Paired with %1$s, but streaming setup didn\'t finish (%2$s). Pair again to retry.</string>
+</resources>

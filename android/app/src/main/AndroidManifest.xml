@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -35,6 +36,14 @@
         android:required="false" />
     <uses-feature
         android:name="android.hardware.sensor.gyroscope"
+        android:required="false" />
+
+    <!-- PocketPC: the camera is only used to scan the pairing QR code; typing the code works without one -->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
         android:required="false" />
 
     <!-- Disable legacy input emulation on ChromeOS -->
@@ -177,6 +186,29 @@
         <service
             android:name=".binding.input.driver.UsbDriverService"
             android:label="Usb Driver Service" />
+
+        <!-- PocketPC: pair with the PC companion (QR code, typed code, or pocketpc://pair link) -->
+        <activity
+            android:name="com.pocketpc.app.PairActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:label="@string/pocketpc_pair_title"
+            android:resizeableActivity="true"
+            android:windowSoftInputMode="stateHidden"
+            android:enableOnBackInvokedCallback="true"
+            android:configChanges="mcc|mnc|touchscreen|keyboard|keyboardHidden|navigation|screenLayout|fontScale|uiMode|orientation|screenSize|smallestScreenSize|layoutDirection">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="pocketpc" android:host="pair" />
+            </intent-filter>
+        </activity>
+        <!-- QR scanner: follow the phone's rotation instead of forcing landscape -->
+        <activity
+            android:name="com.journeyapps.barcodescanner.CaptureActivity"
+            android:screenOrientation="fullSensor"
+            tools:replace="screenOrientation" />
 
         <activity
             android:name=".HelpActivity"

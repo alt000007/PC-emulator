@@ -1,0 +1,43 @@
+plugins {
+    id 'java-library'
+}
+
+group = 'com.pocketpc'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    // Android desugars Java 17 language features; keep the API surface Android-friendly
+    // (no java.net.http, no HexFormat, no records).
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+dependencies {
+    // org.json ships with Android itself, so it must not be bundled into the APK.
+    compileOnly 'org.json:json:20260814'
+
+    testImplementation 'org.json:json:20260814'
+    testImplementation 'org.bouncycastle:bcpkix-jdk18on:1.85'
+    testImplementation platform('org.junit:junit-bom:6.1.3')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.compilerArgs += ['-Xlint:all', '-Werror']
+}
+
+test {
+    useJUnitPlatform()
+    // Interop tests talk to a running pc/tools/PocketPC.TestHost; see PairingInteropTest.
+    environment 'POCKETPC_TESTHOST_URI_FILE', System.getenv('POCKETPC_TESTHOST_URI_FILE') ?: ''
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+        exceptionFormat 'full'
+    }
+}

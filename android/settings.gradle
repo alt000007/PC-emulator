@@ -1,1 +1,6 @@
+rootProject.name = 'PocketPC'
+
+// Pairing/protocol code, buildable and testable without the Android SDK.
+includeBuild('pocketpc-core')
+
 include ':app'

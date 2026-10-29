@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Server.Kestrel.Https;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using PocketPC.Core.Devices;
@@ -85,6 +86,9 @@ public sealed class CompanionServer : IAsyncDisposable
         var builder = WebApplication.CreateSlimBuilder();
         builder.Logging.ClearProviders();
         builder.Services.AddSingleton(_loggerFactory);
+
+        // This server is embedded in an app (tray app, test host); it must not grab Ctrl+C/SIGTERM.
+        builder.Services.AddSingleton<IHostLifetime, EmbeddedHostLifetime>();
         builder.WebHost.ConfigureKestrel(kestrel =>
         {
             kestrel.AddServerHeader = false;
@@ -269,4 +273,12 @@ public sealed class CompanionServer : IAsyncDisposable
 
         return cleaned.Length > 64 ? cleaned[..64] : cleaned;
     }
+}
+
+/// <summary>Host lifetime that leaves process signals to the embedding application.</summary>
+internal sealed class EmbeddedHostLifetime : IHostLifetime
+{
+    public Task WaitForStartAsync(CancellationToken cancellationToken) => Task.CompletedTask;
+
+    public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 }
