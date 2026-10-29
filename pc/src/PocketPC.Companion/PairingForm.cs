@@ -93,6 +93,7 @@ internal sealed class PairingForm : Form
         using var decoded = Image.FromStream(stream);
         _qr.Image?.Dispose();
         _qr.Image = new Bitmap(decoded);
+        _qr.Enabled = true;
 
         _code.Text = PairingCode.Format(session.Code);
         _where.Text = $"PC: {Environment.MachineName}   ·   {string.Join(", ", uri.Hosts)}";
@@ -123,19 +124,34 @@ internal sealed class PairingForm : Form
 
     private void OnDevicePaired(object? sender, PairedDevice device)
     {
-        BeginInvoke(() =>
+        // Raised on a server thread; the window may be closing at the same moment.
+        if (IsDisposed || !IsHandleCreated)
         {
-            _paired = true;
-            _countdown.Stop();
-            _status.Text = $"✔ Paired with {device.Name}. The phone is now finishing streaming setup.";
-            _status.ForeColor = Color.SeaGreen;
-            var closeTimer = new System.Windows.Forms.Timer { Interval = 3500 };
-            closeTimer.Tick += (_, _) =>
-            {
-                closeTimer.Dispose();
-                Close();
-            };
-            closeTimer.Start();
-        });
+            return;
+        }
+
+        try
+        {
+            BeginInvoke(ShowPaired, device);
+        }
+        catch (InvalidOperationException)
+        {
+            // Window closed in between; nothing to show.
+        }
+    }
+
+    private void ShowPaired(PairedDevice device)
+    {
+        _paired = true;
+        _countdown.Stop();
+        _status.Text = $"✔ Paired with {device.Name}. The phone is now finishing streaming setup.";
+        _status.ForeColor = Color.SeaGreen;
+        var closeTimer = new System.Windows.Forms.Timer { Interval = 3500 };
+        closeTimer.Tick += (_, _) =>
+        {
+            closeTimer.Dispose();
+            Close();
+        };
+        closeTimer.Start();
     }
 }

@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using PocketPC.Core;
 
 namespace PocketPC.Companion;
@@ -16,6 +17,7 @@ internal static class Program
         }
 
         ApplicationConfiguration.Initialize();
+        Application.SetUnhandledExceptionMode(UnhandledExceptionMode.CatchException);
 
         CompanionHost host;
         try
@@ -32,6 +34,15 @@ internal static class Program
                 MessageBoxIcon.Error);
             return;
         }
+
+        Application.ThreadException += (_, e) =>
+        {
+            host.Log.LogError(e.Exception, "Unexpected error in the UI");
+            MessageBox.Show($"Something went wrong:\n\n{e.Exception.Message}\n\nDetails are in the log folder.", "PocketPC",
+                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        };
+        AppDomain.CurrentDomain.UnhandledException += (_, e) =>
+            host.Log.LogCritical(e.ExceptionObject as Exception, "Fatal error");
 
         var startHidden = args.Contains("--background");
         using var context = new TrayContext(host, showWindow: !startHidden);

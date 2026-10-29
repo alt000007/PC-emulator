@@ -152,7 +152,14 @@ internal sealed class MainForm : Form
     {
         if (IsHandleCreated && !IsDisposed)
         {
-            BeginInvoke(RefreshDevices);
+            try
+            {
+                BeginInvoke(RefreshDevices);
+            }
+            catch (InvalidOperationException)
+            {
+                // Window is being destroyed.
+            }
         }
     }
 
